@@ -1,0 +1,22 @@
+utils.loadPlatform("ti.platforms.dsk6713");
+
+/* The following DSP/BIOS Features are enabled.  */
+bios.enableRealTimeAnalysis(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+bios.HWI.instance("HWI_INT4").interruptSource = prog.get("MCSP_1_Receive");
+bios.HWI.instance("HWI_INT4").fxn = prog.extern("ISR_MA");
+bios.HWI.instance("HWI_INT4").useDispatcher = 1;
+bios.HWI.instance("HWI_INT4").interruptSource = prog.get("MCSP_1_Transmit");
+bios.HWI.instance("HWI_INT4").interruptSource = prog.get("MCSP_1_Receive");
+bios.HWI.instance("HWI_INT4").interruptSource = prog.get("MCSP_1_Transmit");
+bios.HWI.instance("HWI_INT4").interruptSource = prog.get("MCSP_1_Receive");
+bios.MEM.NOMEMORYHEAPS = 0;
+bios.MEM.instance("IRAM").createHeap = 1;
+bios.MEM.BIOSOBJSEG = prog.get("IRAM");
+bios.MEM.MALLOCSEG = prog.get("IRAM");
+bios.HWI.instance("HWI_INT4").fxn = prog.extern("ISR_AIC");
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+prog.gen();

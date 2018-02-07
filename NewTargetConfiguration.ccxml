@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations XML_version="1.2" id="configurations_0">
+<configuration XML_version="1.2" id="Spectrum Digital DSK-EVM-eZdsp onboard USB Emulator_0">
+        <instance XML_version="1.2" desc="Spectrum Digital DSK-EVM-eZdsp onboard USB Emulator_0" href="connections\SDDSKUSB_Connection.xml" id="Spectrum Digital DSK-EVM-eZdsp onboard USB Emulator_0" xml="SDDSKUSB_Connection.xml" xmlpath="connections"/>
+        <connection XML_version="1.2" id="Spectrum Digital DSK-EVM-eZdsp onboard USB Emulator_0">
+            <instance XML_version="1.2" href="drivers\sdgo6713dsk.xml" id="drivers" xml="sdgo6713dsk.xml" xmlpath="drivers"/>
+            <platform XML_version="1.2" id="platform_0">
+                <instance XML_version="1.2" desc="DSK6713_0" href="boards\dsk6713.xml" id="DSK6713_0" xml="dsk6713.xml" xmlpath="boards"/>
+            </platform>
+        </connection>
+    </configuration>
+</configurations>
