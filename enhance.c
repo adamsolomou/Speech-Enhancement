@@ -118,23 +118,23 @@ void main()
   	int k; // used in various for loops
   
 	/*  Initialize and zero fill arrays */  
-	inbuffer				= (float *) calloc(CIRCBUF, sizeof(float));		/* Input array */
-    outbuffer				= (float *) calloc(CIRCBUF, sizeof(float));		/* Output array */
-	inframe					= (float *) calloc(FFTLEN, sizeof(float));		/* Array for processing*/
-    outframe				= (float *) calloc(FFTLEN, sizeof(float));		/* Array for processing*/
-    inwin					= (float *) calloc(FFTLEN, sizeof(float));		/* Input window */
-    outwin					= (float *) calloc(FFTLEN, sizeof(float));		/* Output window */
-    M1						= (float *) calloc(NFREQ, sizeof(float));		/* M1 */
-    M2						= (float *) calloc(NFREQ, sizeof(float));		/* M2 */
-    M3						= (float *) calloc(NFREQ, sizeof(float));		/* M3 */
-    M4						= (float *) calloc(NFREQ, sizeof(float));		/* M4 */
-    Pt						= (float *) calloc(NFREQ, sizeof(float));		/* P(t) */
-	Pt_prev					= (float *) calloc(NFREQ, sizeof(float));		/* P(t-1) */
-	X_magnitude				= (float *) calloc(NFREQ, sizeof(float));		/* Magnitude spectrum */
-	noise_estimate   		= (float *) calloc(NFREQ, sizeof(float)); 		/* Noise estimate array */
-	low_pass_noise 			= (float *) calloc(NFREQ, sizeof(float));		/* Low pass noise estimate */
-	low_pass_noise_prev 	= (float *) calloc(NFREQ, sizeof(float));		/* Previous low pass noise estimate  */
-	intermediate			= (complex *) calloc(FFTLEN, sizeof(complex));	/* Complex buffer */
+	inbuffer                = (float *) calloc(CIRCBUF, sizeof(float));		/* Input array */
+    outbuffer               = (float *) calloc(CIRCBUF, sizeof(float));		/* Output array */
+	inframe                 = (float *) calloc(FFTLEN, sizeof(float));		/* Array for processing*/
+    outframe                = (float *) calloc(FFTLEN, sizeof(float));		/* Array for processing*/
+    inwin                   = (float *) calloc(FFTLEN, sizeof(float));		/* Input window */
+    outwin                  = (float *) calloc(FFTLEN, sizeof(float));		/* Output window */
+    M1                      = (float *) calloc(NFREQ, sizeof(float));		/* M1 */
+    M2                      = (float *) calloc(NFREQ, sizeof(float));		/* M2 */
+    M3                      = (float *) calloc(NFREQ, sizeof(float));		/* M3 */
+    M4                      = (float *) calloc(NFREQ, sizeof(float));		/* M4 */
+    Pt                      = (float *) calloc(NFREQ, sizeof(float));		/* P(t) */
+	Pt_prev                 = (float *) calloc(NFREQ, sizeof(float));		/* P(t-1) */
+	X_magnitude             = (float *) calloc(NFREQ, sizeof(float));		/* Magnitude spectrum */
+	noise_estimate          = (float *) calloc(NFREQ, sizeof(float)); 		/* Noise estimate array */
+	low_pass_noise          = (float *) calloc(NFREQ, sizeof(float));		/* Low pass noise estimate */
+	low_pass_noise_prev     = (float *) calloc(NFREQ, sizeof(float));		/* Previous low pass noise estimate  */
+	intermediate            = (complex *) calloc(FFTLEN, sizeof(complex));	/* Complex buffer */
 
 
 	/* initialize board and the audio port */
