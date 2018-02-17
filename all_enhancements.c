@@ -1,14 +1,14 @@
 /*************************************************************************************
-	DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING
-			IMPERIAL COLLEGE LONDON 
+        DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING
+                IMPERIAL COLLEGE LONDON 
 
-		EE 3.19: Real Time Digital Signal Processing
-			Dr Paul Mitcheson and Daniel Harvey
+        EE 3.19: Real Time Digital Signal Processing
+            Dr Paul Mitcheson and Daniel Harvey
 
-				PROJECT: Frame Processing
+                PROJECT: Frame Processing
 
-			********* ENHANCE. C **********
-			Shell for speech enhancement 
+            ********* ENHANCE. C **********
+            Shell for speech enhancement 
 
 Demonstrates overlap-add frame processing (interrupt driven) on the DSK. 
 
@@ -38,16 +38,16 @@ Demonstrates overlap-add frame processing (interrupt driven) on the DSK.
 // Some functions to help with writing/reading the audio ports when using interrupts.
 #include <helper_functions_ISR.h>
 
-#define WINCONST 0.85185			/* 0.46/0.54 for Hamming window */
-#define FSAMP 8000.0				/* sample frequency, ensure this matches Config for AIC */
-#define FFTLEN 256					/* fft length = frame length 256/8000 = 32 ms*/
-#define NFREQ (1+FFTLEN/2)			/* number of frequency bins from a real FFT */
-#define OVERSAMP 4					/* oversampling ratio (2 or 4) */  
-#define FRAMEINC (FFTLEN/OVERSAMP)	/* Frame increment */
-#define CIRCBUF (FFTLEN+FRAMEINC)	/* length of I/O buffers */
+#define WINCONST 0.85185            /* 0.46/0.54 for Hamming window */
+#define FSAMP 8000.0                /* sample frequency, ensure this matches Config for AIC */
+#define FFTLEN 256                  /* fft length = frame length 256/8000 = 32 ms*/
+#define NFREQ (1+FFTLEN/2)          /* number of frequency bins from a real FFT */
+#define OVERSAMP 4                  /* oversampling ratio (2 or 4) */  
+#define FRAMEINC (FFTLEN/OVERSAMP)  /* Frame increment */
+#define CIRCBUF (FFTLEN+FRAMEINC)   /* length of I/O buffers */
 
-#define OUTGAIN 16000.0				/* Output gain for DAC */
-#define INGAIN  (1.0/16000.0)		/* Input gain for ADC  */
+#define OUTGAIN 16000.0             /* Output gain for DAC */
+#define INGAIN  (1.0/16000.0)       /* Input gain for ADC  */
 
 #define PI 3.141592653589793
 #define TFRAME FRAMEINC/FSAMP       /* time between calculation of each frame */
@@ -76,41 +76,41 @@ DSK6713_AIC23_Config Config = { \
 // Codec handle:- a variable used to identify audio interface  
 DSK6713_AIC23_CodecHandle H_Codec;
 
-float *inbuffer, *outbuffer;   		/* Input/output circular buffers */
+float *inbuffer, *outbuffer;        /* Input/output circular buffers */
 float *inframe, *outframe;          /* Input and output frames */
 float *inwin, *outwin;              /* Input and output windows */
 
 /************* Array Declarations ************/
-float *X_magnitude;					/* Magnitude spectrum */
-float *Pt, *Pt_prev;				/* Low pass filtered input */
-float *low_pass_noise; 				/* Low pass noise estimate array */
-float *low_pass_noise_prev; 		/* Low pass noise estimate array */
-float *noise_estimate; 				/* Noise estimate array */
-float *M1, *M2, *M3, *M4, *tmp_M4; 	/* 2.5 sec buffers to find minimum noise amp */
-complex *intermediate; 	            /* Complex array to perform FFT/IFFT calculations */ 
+float *X_magnitude;                 /* Magnitude spectrum */
+float *Pt, *Pt_prev;                /* Low pass filtered input */
+float *low_pass_noise;              /* Low pass noise estimate array */
+float *low_pass_noise_prev;         /* Low pass noise estimate array */
+float *noise_estimate;              /* Noise estimate array */
+float *M1, *M2, *M3, *M4, *tmp_M4;  /* 2.5 sec buffers to find minimum noise amp */
+complex *intermediate;              /* Complex array to perform FFT/IFFT calculations */ 
 
 /**********************************************/
-float ingain, outgain;				/* ADC and DAC gains */ 
-float cpufrac; 						/* Fraction of CPU time used */
+float ingain, outgain;              /* ADC and DAC gains */ 
+float cpufrac;                      /* Fraction of CPU time used */
 
 /*********************************************/
 volatile int io_ptr=0;              /* Input/ouput pointer for circular buffers */
 volatile int frame_ptr=0;           /* Frame pointer */
-volatile int f_index=-1;			/* Counts until 312 corresponding to 2.5 secs*/
+volatile int f_index=-1;            /* Counts until 312 corresponding to 2.5 secs*/
 
 /*********************************************/
-float alpha1 = 2;					/* Correction factor for noise estimation */
-float alpha_basic = 20; 			/* Correction factor for noise estimation */
-float lambda = 0.1; 				/* Lambda value */
-float g; 							/* Frequency dependent gain factor */
-float tau = 0.025; 					/* Time constant tau=25ms */
-float tau_4 = 0.06;					/* Time constant for enhancement 4 */
-float noise_tau3 = 0.08; 			/* Time constant for enhancement 3 */
-float kappa; 						/* Kappa variable for enhancements 1,2 */
-float kappa_noise; 					/* Kappa variable for enhancement 3 */
-float kappa_4; 						/* Kappa variable for enhancement 4 */
-float global_min;					/* Variable to hold the min out of all frames */
-float ROTATE_TIME = 2;				/* Parameter to control rotation of frames */
+float alpha1 = 2;                   /* Correction factor for noise estimation */
+float alpha_basic = 20;             /* Correction factor for noise estimation */
+float lambda = 0.1;                 /* Lambda value */
+float g;                            /* Frequency dependent gain factor */
+float tau = 0.025;                  /* Time constant tau=25ms */
+float tau_4 = 0.06;                 /* Time constant for enhancement 4 */
+float noise_tau3 = 0.08;            /* Time constant for enhancement 3 */
+float kappa;                        /* Kappa variable for enhancements 1,2 */
+float kappa_noise;                  /* Kappa variable for enhancement 3 */
+float kappa_4;                      /* Kappa variable for enhancement 4 */
+float global_min;                   /* Variable to hold the min out of all frames */
+float ROTATE_TIME = 2;             /* Parameter to control rotation of frames */
 
 /*********** Enhancement 8 Declarations **********/
 int frame;			
@@ -151,9 +151,9 @@ void main()
   
 	/*  Initialize and zero fill arrays */  
 
-	inbuffer				= (float *) 	calloc(CIRCBUF, sizeof(float));		/* Input array */
+    inbuffer				= (float *) 	calloc(CIRCBUF, sizeof(float));		/* Input array */
     outbuffer				= (float *) 	calloc(CIRCBUF, sizeof(float));		/* Output array */
-	inframe					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
+    inframe					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
     outframe				= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
     inwin					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Input window */
     outwin					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Output window */
@@ -162,19 +162,19 @@ void main()
     M3						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M3 */
     M4						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M4 */
     Pt						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t) */
-	Pt_prev					= (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t-1) */
-	X_magnitude				= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Magnitude spectrum */
-	low_pass_noise 			= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Low pass noise estimate */
-	low_pass_noise_prev 	= (float *) 	calloc(NFREQ,	sizeof(float));		/* Previous low pass noise estimate */
-	noise_estimate   		= (float *) 	calloc(NFREQ, 	sizeof(float)); 	/* Noise estimate array */
-	intermediate			= (complex *) 	calloc(FFTLEN, 	sizeof(complex));	/* Complex array */
+    Pt_prev					= (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t-1) */
+    X_magnitude				= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Magnitude spectrum */
+    low_pass_noise 			= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Low pass noise estimate */
+    low_pass_noise_prev 	= (float *) 	calloc(NFREQ,	sizeof(float));		/* Previous low pass noise estimate */
+    noise_estimate   		= (float *) 	calloc(NFREQ, 	sizeof(float)); 	/* Noise estimate array */
+    intermediate			= (complex *) 	calloc(FFTLEN, 	sizeof(complex));	/* Complex array */
 	
-	/* Enhancement 8 */
-	Y_8 					= (float *) 	calloc(NFREQ, 	sizeof(float));
- 	Y_minus1 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding previous Y(n-1) frame output*/
-	Y_minus2 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding Y(n-2) frame output */
- 	f_switch 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array to facilitate the pointer switch */
-	Y_current 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array holding current output */
+    /* Enhancement 8 */
+    Y_8 					= (float *) 	calloc(NFREQ, 	sizeof(float));
+    Y_minus1 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding previous Y(n-1) frame output*/
+    Y_minus2 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding Y(n-2) frame output */
+    f_switch 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array to facilitate the pointer switch */
+    Y_current 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array holding current output */
 	
 	/* initialize board and the audio port */
   	init_hardware();
