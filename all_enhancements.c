@@ -151,30 +151,30 @@ void main()
   
 	/*  Initialize and zero fill arrays */  
 
-    inbuffer				= (float *) 	calloc(CIRCBUF, sizeof(float));		/* Input array */
-    outbuffer				= (float *) 	calloc(CIRCBUF, sizeof(float));		/* Output array */
-    inframe					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
-    outframe				= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
-    inwin					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Input window */
-    outwin					= (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Output window */
-    M1						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M1 */
-    M2						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M2 */
-    M3						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M3 */
-    M4						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* M4 */
-    Pt						= (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t) */
-    Pt_prev					= (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t-1) */
-    X_magnitude				= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Magnitude spectrum */
-    low_pass_noise 			= (float *) 	calloc(NFREQ, 	sizeof(float));		/* Low pass noise estimate */
-    low_pass_noise_prev 	= (float *) 	calloc(NFREQ,	sizeof(float));		/* Previous low pass noise estimate */
-    noise_estimate   		= (float *) 	calloc(NFREQ, 	sizeof(float)); 	/* Noise estimate array */
-    intermediate			= (complex *) 	calloc(FFTLEN, 	sizeof(complex));	/* Complex array */
+    inbuffer                = (float *) 	calloc(CIRCBUF, sizeof(float));		/* Input array */
+    outbuffer               = (float *) 	calloc(CIRCBUF, sizeof(float));		/* Output array */
+    inframe                 = (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
+    outframe                = (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Array for processing*/
+    inwin                   = (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Input window */
+    outwin                  = (float *) 	calloc(FFTLEN, 	sizeof(float));		/* Output window */
+    M1                      = (float *) 	calloc(NFREQ, 	sizeof(float));		/* M1 */
+    M2                      = (float *) 	calloc(NFREQ, 	sizeof(float));		/* M2 */
+    M3                      = (float *) 	calloc(NFREQ, 	sizeof(float));		/* M3 */
+    M4                      = (float *) 	calloc(NFREQ, 	sizeof(float));		/* M4 */
+    Pt                      = (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t) */
+    Pt_prev                 = (float *) 	calloc(NFREQ, 	sizeof(float));		/* P(t-1) */
+    X_magnitude             = (float *) 	calloc(NFREQ, 	sizeof(float));		/* Magnitude spectrum */
+    low_pass_noise          = (float *) 	calloc(NFREQ, 	sizeof(float));		/* Low pass noise estimate */
+    low_pass_noise_prev     = (float *) 	calloc(NFREQ,	sizeof(float));		/* Previous low pass noise estimate */
+    noise_estimate          = (float *) 	calloc(NFREQ, 	sizeof(float)); 	/* Noise estimate array */
+    intermediate            = (complex *) 	calloc(FFTLEN, 	sizeof(complex));	/* Complex array */
 	
     /* Enhancement 8 */
-    Y_8 					= (float *) 	calloc(NFREQ, 	sizeof(float));
-    Y_minus1 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding previous Y(n-1) frame output*/
-    Y_minus2 				= (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding Y(n-2) frame output */
-    f_switch 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array to facilitate the pointer switch */
-    Y_current 				= (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array holding current output */
+    Y_8                     = (float *) 	calloc(NFREQ, 	sizeof(float));
+    Y_minus1                = (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding previous Y(n-1) frame output*/
+    Y_minus2                = (complex *) 	calloc(FFTLEN, 	sizeof(complex)); 	/* Array holding Y(n-2) frame output */
+    f_switch                = (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array to facilitate the pointer switch */
+    Y_current               = (complex * ) 	calloc(FFTLEN, 	sizeof(complex)) ; 	/* Array holding current output */
 	
 	/* initialize board and the audio port */
   	init_hardware();
