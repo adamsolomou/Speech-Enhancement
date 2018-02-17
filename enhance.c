@@ -137,28 +137,28 @@ void main()
     intermediate            = (complex *) calloc(FFTLEN, sizeof(complex));	/* Complex buffer */
 
 
-	/* initialize board and the audio port */
-  	init_hardware();
+    /* initialize board and the audio port */ 
+    init_hardware();
   
-  	/* initialize hardware interrupts */
-  	init_HWI();    
+    /* initialize hardware interrupts */
+    init_HWI();    
   
-	/* initialize algorithm constants */                  
-  	for (k=0;k<FFTLEN;k++)
-	{                           
-	inwin[k] = sqrt((1.0-WINCONST*cos(PI*(2*k+1)/FFTLEN))/OVERSAMP);
-	outwin[k] = inwin[k]; 
-	} 
+    /* initialize algorithm constants */                  
+    for (k=0;k<FFTLEN;k++)
+    {                           
+    inwin[k] = sqrt((1.0-WINCONST*cos(PI*(2*k+1)/FFTLEN))/OVERSAMP);
+    outwin[k] = inwin[k]; 
+    } 
 
-  	ingain=INGAIN;
-  	outgain=OUTGAIN;   
+    ingain=INGAIN;
+    outgain=OUTGAIN;   
   	
-  	/* Calculate kappa constants */
-	kappa_4 = exp((double)(-(TFRAME)/tau));
-	kappa_noise = exp((double)(-(TFRAME)/tau_noise));
+    /* Calculate kappa constants */
+    kappa_4 = exp((double)(-(TFRAME)/tau));
+    kappa_noise = exp((double)(-(TFRAME)/tau_noise));
  							
-  	/* main loop, wait for interrupt */  
-  	while(1) 	process_frame();
+    /* main loop, wait for interrupt */  
+    while(1) 	process_frame();
 }
     
 /********************************** init_hardware() *********************************/  
