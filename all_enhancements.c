@@ -1,21 +1,17 @@
 /*************************************************************************************
-			       DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING
-					   		     IMPERIAL COLLEGE LONDON 
+DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING
+IMPERIAL COLLEGE LONDON 
 
- 				      EE 3.19: Real Time Digital Signal Processing
-					       Dr Paul Mitcheson and Daniel Harvey
+EE 3.19: Real Time Digital Signal Processing
+Dr Paul Mitcheson and Daniel Harvey
 
-				        		 PROJECT: Frame Processing
+PROJECT: Frame Processing
 
- 				            ********* ENHANCE. C **********
-							 Shell for speech enhancement 
+********* ENHANCE. C **********
+Shell for speech enhancement 
 
-  		Demonstrates overlap-add frame processing (interrupt driven) on the DSK. 
+Demonstrates overlap-add frame processing (interrupt driven) on the DSK. 
 
- *************************************************************************************
- 				             By Danny Harvey: 21 July 2006
-							 Updated for use on CCS v4 Sept 2010
- ************************************************************************************/
 /*
  *	You should modify the code so that a speech enhancement project is built 
  *  on top of this template.
